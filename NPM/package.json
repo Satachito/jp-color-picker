@@ -1,11 +1,11 @@
 {
   "name": "@satachito/jp-color-picker",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Color picker WebComponent",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
 }
