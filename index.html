@@ -1,7 +1,69 @@
-<jp-color-picker id=JCP1 color=green style="border: solid 1px black"></jp-color-picker>
-<jp-color-picker id=JCP2 style="border: solid 1px black"></jp-color-picker>
-<script type=module src=node_modules/@satachito/jp-color-picker/index.js></script>
-<button id=GET>GET</button>
-<script>
-GET.onclick = () => alert( JCP1.value )
+<style>
+jp-color-picker {
+;	display	: inline-block
+;	border	: solid 1px black
+}
+</style>
+
+<button id=GET1>GET1</button><jp-color-picker id=JCP1 value=red></jp-color-picker>
+<br>
+
+<button id=GET2>GET2</button><jp-color-picker id=JCP2></jp-color-picker>
+<br>
+
+<button id=GET3>GET3</button><jp-color-picker id=JCP3></jp-color-picker>
+<br>
+
+<script type=module>
+
+import JPColorPicker from './node_modules/@satachito/jp-color-picker/index.js'
+
+JCP2.value = 'red'
+JCP3.setAttribute( 'value', 'red' )
+
+GET1.onclick = () => alert( JCP1.value )
+GET2.onclick = () => alert( JCP2.value )
+GET3.onclick = () => alert( JCP3.value )
+
+const b4 = document.body.appendChild( document.createElement( 'button' ) )
+b4.textContent = 'GET4'
+b4.onclick = () => alert( JCP4.value )
+const jcp4 = document.body.appendChild( document.createElement( 'jp-color-picker' ) )
+jcp4.id = 'JCP4'
+jcp4.value = 'red'
+document.body.appendChild( document.createElement( 'br' ) )
+
+const b5 = document.body.appendChild( document.createElement( 'button' ) )
+b5.textContent = 'GET5'
+b5.onclick = () => alert( JCP5.value )
+const jcp5 = document.body.appendChild( document.createElement( 'jp-color-picker' ) )
+jcp5.id = 'JCP5'
+jcp5.setAttribute( 'value', 'red' )
+document.body.appendChild( document.createElement( 'br' ) )
+
+const b6 = document.body.appendChild( document.createElement( 'button' ) )
+b6.textContent = 'GET6'
+b6.onclick = () => alert( JCP6.value )
+const jcp6 = document.body.appendChild( new JPColorPicker() )
+jcp6.id = 'JCP6'
+jcp6.value = 'red'
+document.body.appendChild( document.createElement( 'br' ) )
+
+const b7 = document.body.appendChild( document.createElement( 'button' ) )
+b7.textContent = 'GET7'
+b7.onclick = () => alert( JCP7.value )
+const jcp7 = document.body.appendChild( new JPColorPicker() )
+jcp7.id = 'JCP7'
+jcp7.setAttribute( 'value', 'red' )
+document.body.appendChild( document.createElement( 'br' ) )
+
+const b8 = document.body.appendChild( document.createElement( 'button' ) )
+b8.textContent = 'GET8'
+b8.onclick = () => alert( JCP8.value )
+const jcp8 = document.body.appendChild( new JPColorPicker( 'red' ) )
+jcp8.id = 'JCP8'
+document.body.appendChild( document.createElement( 'br' ) )
+
+
+
 </script>
