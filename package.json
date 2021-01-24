@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@satachito/jp-color-picker": "^1.0.3"
+    "@satachito/jp-color-picker": "^1.0.4"
   }
 }
