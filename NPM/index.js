@@ -251,6 +251,10 @@ JPColorPicker extends HTMLElement {
 		this.list.value = n
 		this.SyncPalette( n )
 	}
+
+	get value() {
+		return this.list.value
+	}
 }
 
 customElements.define( 'jp-color-picker', JPColorPicker )

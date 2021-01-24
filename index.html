@@ -1,3 +1,7 @@
-<jp-color-picker color=green style="border: solid 1px black"></jp-color-picker>
-<jp-color-picker style="border: solid 1px black"></jp-color-picker>
+<jp-color-picker id=JCP1 color=green style="border: solid 1px black"></jp-color-picker>
+<jp-color-picker id=JCP2 style="border: solid 1px black"></jp-color-picker>
 <script type=module src=node_modules/@satachito/jp-color-picker/index.js></script>
+<button id=GET>GET</button>
+<script>
+GET.onclick = () => alert( JCP1.value )
+</script>
