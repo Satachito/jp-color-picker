@@ -150,51 +150,6 @@ ColorValues = {		//	https://developer.mozilla.org/ja/docs/Web/CSS/color_value
 ,	rebeccapurple			:	"#663399"
 }
 
-export const
-Y_601	= ( r, g, b ) => 0.299  * r + 0.587  * g + 0.114  * b
-export const
-Y_709	= ( r, g, b ) => 0.2126 * r + 0.7152 * g + 0.0722 * b
-
-const
-RGBA_HexColor = ( $, length ) => [
-	parseInt( $.substr( 1 + length * 0, length ), 16 ) / ( 2 ** ( length * 4 ) - 1 )
-,	parseInt( $.substr( 1 + length * 1, length ), 16 ) / ( 2 ** ( length * 4 ) - 1 )
-,	parseInt( $.substr( 1 + length * 2, length ), 16 ) / ( 2 ** ( length * 4 ) - 1 )
-,	parseInt( $.substr( 1 + length * 3, length ), 16 ) / ( 2 ** ( length * 4 ) - 1 )
-]
-
-const
-RGBA_HTMLColor = $ => {
-	if ( $.charAt( 0 ) === '#' ) {
-		switch ( $.length ) {
-		case 4:	return RGBA_HexColor( $ + 'f', 1 )
-		case 5:	return RGBA_HexColor( $, 1 )
-		case 7:	return RGBA_HexColor( $ + 'ff', 2 )
-		case 9:	return RGBA_HexColor( $, 2 )
-		}
-	} else {
-		const _ = ColorValues[ $ ]
-		if ( _ ) return RGBA_HexColor( _ + 'ff', 2 )
-	}
-	throw 'RGBA_HTMLColor'
-}
-
-const
-HexColor7 = $ => {
-	if ( $.charAt( 0 ) === '#' ) {
-		switch ( $.length ) {
-		case 4:
-		case 5:	return $.charAt( 0 ) + $.charAt( 1 ) + $.charAt( 1 ) + $.charAt( 2 ) + $.charAt( 2 ) + $.charAt( 3 ) + $.charAt( 3 )
-		case 7:	return $
-		case 9:	return $.substr( 0, 7 )
-		}
-	} else {
-		const _ = ColorValues[ $ ]
-		if ( _ ) return _
-	}
-	throw 'HexColor7'
-}
-
 class
 JPColorPicker extends HTMLElement {
 	constructor( $ ) {
@@ -225,19 +180,13 @@ JPColorPicker extends HTMLElement {
 		this.palette.type = 'color'
 		this.palette.style.borderStyle = 'none'
 
-		this.list.onchange		= () => ( this.color = this.list.value.toLowerCase(), this.SyncPalette	() )
-		this.palette.oninput	= () => ( this.color = this.palette.value			, this.SyncList		() )
+		this.list.onchange = () => this.SyncPalette()
+		this.palette.oninput = () => (
+			this.list.value = this.palette.value	
+		,	this.palette.style.opacity = 1
+		)
 
 		this.value = $ || ( this.getAttribute( 'value' ) ?? 'black' )
-	}
-
-	SyncList() {
-		this.list.value = this.color
-		this.palette.style.opacity = 1
-	}
-	SyncPalette() {
-		this.palette.value = HexColor7( this.color )
-		this.palette.style.opacity = RGBA_HTMLColor( this.color )[ 3 ]
 	}
 
 	static get
@@ -246,15 +195,34 @@ JPColorPicker extends HTMLElement {
 		this.value = $
 	}
 
+	SyncPalette() {
+		this.palette.style.opacity = 1
+		const $ = this.list.value
+		if ( $.charAt( 0 ) === '#' ) {
+			switch ( this.list.value.length ) {
+			case 5: this.palette.style.opacity = $.charAt( 4 ) / 15
+				//	FALL THROUGH
+			case 4: this.palette.value = '#' + $.charAt( 1 ) + $.charAt( 1 ) + $.charAt( 2 ) + $.charAt( 2 ) + $.charAt( 3 ) + $.charAt( 3 )
+				break
+			case 9:	this.palette.style.opacity = $.substr( 7, 2 ) / 255
+				//	FALL THROUGH
+			case 7: this.palette.value = $.substr( 0, 7 )
+				break
+			}
+		} else {
+			const _ = ColorValues[ $.toLowerCase() ]
+			_ && ( this.palette.value = _ )
+		}
+	}
+
 	get
 	value() {
-		return this.color
+		return this.list.value
 	}
 
 	set
 	value( $ ) {
-		this.color = $
-		this.SyncList()
+		this.list.value = $
 		this.SyncPalette()
 	}
 }
