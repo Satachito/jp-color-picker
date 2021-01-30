@@ -2,7 +2,11 @@
 
 ## Abstruct
 
-A color picker ECMAScript module 
+A color picker Web Component
+
+## Module format
+
+ECMAScript modules.
 
 ## Demo
 
