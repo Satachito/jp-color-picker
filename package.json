@@ -1,14 +1,11 @@
 {
-  "name": "colorpicker",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "@satachito/jp-color-picker",
+  "version": "1.0.6",
+  "description": "Color picker WebComponent",
+  "main": "_.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@satachito/jp-color-picker": "^1.0.5"
-  }
+  "license": "MIT"
 }
