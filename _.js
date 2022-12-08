@@ -189,11 +189,11 @@ JPColorPicker extends HTMLElement {
 	constructor( $ ) {
 		super()
 		this.$ = $ || 'black'
-		console.log( '\nconstructor', $, this.$ )
+	//	console.log( '\nconstructor', $, this.$ )
 	}
 
 	connectedCallback() {
-		console.log( 'connectedCallback' )
+	//	console.log( 'connectedCallback' )
 
 		const
 		_ = this.appendChild( document.createElement( 'datalist' ) )
@@ -228,7 +228,7 @@ JPColorPicker extends HTMLElement {
 	static get
 	observedAttributes() { return [ 'value' ] }
 	attributeChangedCallback( k, o, v ) {
-		console.log( 'attributeChangedCallback', k, v, this.getAttribute( k ) )
+	//	console.log( 'attributeChangedCallback', k, v, this.getAttribute( k ) )
 		this.value = v
 	}
 }
