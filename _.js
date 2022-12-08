@@ -216,7 +216,6 @@ JPColorPicker extends HTMLElement {
 		this.SyncPalette()
 
 		this.list = this.appendChild( document.createElement( 'input' ) )
-		this.list.type = 'list'
 		this.list.setAttribute( 'list', 'Colors' )
 		this.list.onchange = oc => (
 			this.$ = this.list.value
