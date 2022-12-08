@@ -152,54 +152,15 @@ ColorValues = {		//	https://developer.mozilla.org/ja/docs/Web/CSS/color_value
 
 class
 JPColorPicker extends HTMLElement {
-	constructor( $ ) {
-		super()
 
-		const
-		root = this.attachShadow( { mode: 'open' } ).appendChild( document.createElement( 'div' ) )
-		root.style.display = 'inline-block'
-
-		const
-		datalist = root.appendChild( document.createElement( 'datalist' ) )
-		datalist.id = 'Colors'
-		datalist.append(
-			...Object.keys( ColorValues ).sort().map(
-				$ => {
-					const _ = document.createElement( 'option' )
-					_.value = $
-					return _
-				}
-			)
-		)
-
-		this.list = root.appendChild( document.createElement( 'input' ) )
-		this.list.setAttribute( 'list', 'Colors' )
-		this.list.style.borderStyle = 'none'
-
-		this.palette = root.appendChild( document.createElement( 'input' ) )
-		this.palette.type = 'color'
-		this.palette.style.borderStyle = 'none'
-
-		this.list.onchange = () => this.SyncPalette()
-		this.palette.oninput = () => (
-			this.list.value = this.palette.value	
-		,	this.palette.style.opacity = 1
-		)
-
-		this.value = $ || ( this.getAttribute( 'value' ) ?? 'black' )
+	SyncList() {
+		this.list.value = this.$
 	}
-
-	static get
-	observedAttributes() { return [ 'value' ] }
-	attributeChangedCallback( name, o, $ ) {
-		this.value = $
-	}
-
 	SyncPalette() {
 		this.palette.style.opacity = 1
-		const $ = this.list.value
+		const $ = this.$
 		if ( $.charAt( 0 ) === '#' ) {
-			switch ( this.list.value.length ) {
+			switch ( $.length ) {
 			case 5: this.palette.style.opacity = $.charAt( 4 ) / 15
 				//	FALL THROUGH
 			case 4: this.palette.value = '#' + $.charAt( 1 ) + $.charAt( 1 ) + $.charAt( 2 ) + $.charAt( 2 ) + $.charAt( 3 ) + $.charAt( 3 )
@@ -210,20 +171,65 @@ JPColorPicker extends HTMLElement {
 				break
 			}
 		} else {
-			const _ = ColorValues[ $.toLowerCase() ]
-			_ && ( this.palette.value = _ )
+			this.palette.value = ColorValues[ $.toLowerCase() ]	//	if ColorValue is void 0, palette automatic changes to black
 		}
 	}
 
 	get
 	value() {
-		return this.list.value
+		return this.$
+	}
+	set
+	value( _ ) {
+		this.$ = _
+		this.list && this.SyncList()
+		this.palette && this.SyncPalette()
 	}
 
-	set
-	value( $ ) {
-		this.list.value = $
+	constructor( $ ) {
+		super()
+		this.$ = $ || 'black'
+		console.log( '\nconstructor', $, this.$ )
+	}
+
+	connectedCallback() {
+		console.log( 'connectedCallback' )
+
+		const
+		_ = this.appendChild( document.createElement( 'datalist' ) )
+		_.id = 'Colors'
+		_.append(
+			...Object.keys( ColorValues ).sort().map(
+				$ => {
+					const _ = document.createElement( 'option' )
+					_.value = $
+					return _
+				}
+			)
+		)
+		this.palette = this.appendChild( document.createElement( 'input' ) )
+		this.palette.type = 'color'
+		this.palette.oninput = oi => (
+			this.$ = this.palette.value
+		,	this.SyncList()
+		)
 		this.SyncPalette()
+
+		this.list = this.appendChild( document.createElement( 'input' ) )
+		this.list.type = 'list'
+		this.list.setAttribute( 'list', 'Colors' )
+		this.list.onchange = oc => (
+			this.$ = this.list.value
+		,	this.SyncPalette()
+		)
+		this.SyncList()
+	}
+
+	static get
+	observedAttributes() { return [ 'value' ] }
+	attributeChangedCallback( k, o, v ) {
+		console.log( 'attributeChangedCallback', k, v, this.getAttribute( k ) )
+		this.value = v
 	}
 }
 
