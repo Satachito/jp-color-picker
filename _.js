@@ -171,7 +171,7 @@ JPColorPicker extends HTMLElement {
 				break
 			}
 		} else {
-			this.palette.value = ColorValues[ $.toLowerCase() ]	//	if ColorValue is void 0, palette automatic changes to black
+			this.palette.value = ColorValues[ $.toLowerCase() ]	?? '#000000'
 		}
 	}
 
