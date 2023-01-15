@@ -1,6 +1,6 @@
 { "type": "module",
   "name": "@satachito/jp-color-picker",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "Color picker WebComponent",
   "main": "_.js",
   "scripts": {
