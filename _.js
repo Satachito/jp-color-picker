@@ -161,11 +161,11 @@ JPColorPicker extends HTMLElement {
 		const $ = this.$
 		if ( $.charAt( 0 ) === '#' ) {
 			switch ( $.length ) {
-			case 5: this.palette.style.opacity = $.charAt( 4 ) / 15
+			case 5: this.palette.style.opacity = parseInt( $.substr( 4, 1 ), 16 ) / 15
 				//	FALL THROUGH
 			case 4: this.palette.value = '#' + $.charAt( 1 ) + $.charAt( 1 ) + $.charAt( 2 ) + $.charAt( 2 ) + $.charAt( 3 ) + $.charAt( 3 )
 				break
-			case 9:	this.palette.style.opacity = $.substr( 7, 2 ) / 255
+			case 9:	this.palette.style.opacity = parseInt( $.substr( 7, 2 ), 16 ) / 255
 				//	FALL THROUGH
 			case 7: this.palette.value = $.substr( 0, 7 )
 				break
